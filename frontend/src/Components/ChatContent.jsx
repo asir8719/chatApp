@@ -15,7 +15,6 @@ const ChatContent = () => {
     
     useEffect(() => {
     socket.on("chat message", (msg, id) => {
-      
       setMessages(prev => {
       if (prev.some(m => m.id === id)) return prev;
       return [...prev, { text: msg, id, isUser: false }];
