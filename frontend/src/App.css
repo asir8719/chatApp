@@ -1,0 +1,41 @@
+.sdbrbtn{
+  font-size: larger;
+  cursor: pointer;
+  padding: .5rem;
+  border-radius: .3rem;
+}
+
+.sdbrbtn button, .sdbrbtn span {
+  border-radius: .2rem;
+}
+
+.sdbrbtn span {
+  padding: 0 0 0 .2rem;
+  font-size: large;
+}
+
+.sdbrbtn:hover {
+  background-color: #292a2a;
+}
+
+.hvrbtn:hover {
+  background-color: #373838;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.form {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.398);
+}
+
+.active {
+  background-color: #424343;
+}
+
+.expanded {
+  width: 350px;
+  transition: all .2s ease-in-out 0.01s;
+}
+
+.nexpanded {
+  transition: all .1s ease-in-out 0.007s;
+}
