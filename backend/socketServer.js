@@ -1,3 +1,4 @@
+import { router } from "./routes/router.js";
 import express from 'express';
 import { createServer } from 'node:http';
 import { fileURLToPath } from 'node:url';
@@ -30,12 +31,16 @@ if (cluster.isPrimary) {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       client_offset TEXT UNIQUE,
       content TEXT
-    );
-  `);
-
-  const app = express();
-  const server = createServer(app);
-  // app.use(cors())
+      );
+      `);
+      
+      const app = express();
+      const server = createServer(app);
+      app.use(cors())
+      
+      app.use(express.json())
+      app.use('/api', router)
+      
   const io = new Server(server, {
     cors: {origin: "*"},
     connectionStateRecovery: {},
@@ -61,7 +66,7 @@ if (cluster.isPrimary) {
         }
         return;
       }
-      io.emit('chat message', msg, result.lastID);
+      io.emit('chat message', msg, clientOffset);
       callback();
     });
 
