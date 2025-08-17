@@ -37,7 +37,7 @@ if (cluster.isPrimary) {
       const app = express();
       const server = createServer(app);
       app.use(cors({
-        origin: ["https://chat-app-cs82.vercel.app/", "http://localhost:3000"],
+        origin: ["https://chat-app-cs82.vercel.app", "http://localhost:3000"],
         methods: ["GET", "POST"],
         credentials: true
       }));
