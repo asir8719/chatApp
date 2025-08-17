@@ -5,7 +5,7 @@ import { io } from "socket.io-client";
 import { useEffect } from "react";
 import { MessageBox } from "react-chat-elements";
 import { useRef } from "react";
-const socket = io("http://localhost:3002", {
+const socket = io("https://chatapp-xmdn.onrender.com", {
   auth: { serverOffset: 0 } // Optional: for message recovery
 });
 
