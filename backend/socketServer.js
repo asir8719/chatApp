@@ -84,7 +84,7 @@ if (cluster.isPrimary) {
     }
   });
 
-  const port = process.env.PORT;
+  const port = "https://chatapp-xmdn.onrender.com";
 
   server.listen(port, () => {
     console.log(`server running at http://localhost:${port}`);
