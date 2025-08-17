@@ -8,7 +8,7 @@ const ChatBot = () => {
     const sendMessage = async () => {
       setChatInput("")
       setMessages([...messages, {text: chatInput, isUser: true}])
-      const response = await fetch("http://localhost:3000/api/wassupai", {
+      const response = await fetch("https://chatapp-xmdn.onrender.com/api/wassupai", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({message: chatInput}),
