@@ -26,9 +26,10 @@ const ChatContent = () => {
 
     const sendMessage = () => {
         if (chatInput.trim()) {
-      setMessages(prev => [...prev, { text: chatInput, id: Date.now(), isUser: true }]);
+      const id = Date.now()
+      setMessages(prev => [...prev, { text: chatInput, id, isUser: true }]);
       sentMessageIds.current.add(id);
-      socket.emit("chat message", chatInput, Date.now(), () => {});
+      socket.emit("chat message", chatInput, id, () => {});
       setChatInput("");
     } 
     }
