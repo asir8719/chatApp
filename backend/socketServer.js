@@ -38,7 +38,7 @@ if (cluster.isPrimary) {
       const server = createServer(app);
       app.use(cors({
         origin: ["https://chat-app-cs82.vercel.app"],
-        methods: ["GET", "POST"],
+        methods: ["GET", "POST", "OPTIONS"],
         credentials: true
       }));
       
@@ -46,10 +46,14 @@ if (cluster.isPrimary) {
       app.use('/api', router)
       
   const io = new Server(server, {
-    cors: {origin: "*"},
-    connectionStateRecovery: {},
-    adapter: createAdapter()
-  });
+  cors: {
+    origin: "https://chat-app-cs82.vercel.app",
+    methods: ["GET", "POST", "OPTIONS"],
+    credentials: true
+  },
+  connectionStateRecovery: {},
+  adapter: createAdapter()
+});
 
   const __dirname = dirname(fileURLToPath(import.meta.url));
 
