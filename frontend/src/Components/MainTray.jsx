@@ -1,17 +1,25 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useAuth } from "../Store/Auth"
 import { PiPhoneLight } from "react-icons/pi";
 import ChatBot from "./ChatBot";
 import { MessageBox, MessageList } from 'react-chat-elements';
 import ChatContent from "./ChatContent";
+import { IoArrowBack } from "react-icons/io5";
 
-const TrayUpperPanel = () => {
+const TrayUpperPanel = ({ onBack, showBack }) => {
   const {chats, selectedChat, setOpenUserInfo} = useAuth()
   return (
     <div className="flex justify-between items-center h-15 px-8 bg-[#2d2d2d] border-l-1">
-      <div className="flex gap-x-4 items-center w-full text-white font-medium" onClick={() => setOpenUserInfo(true)}>
+      <div className="flex gap-x-4 items-center w-full text-white font-medium">
+        {showBack && (
+          <button onClick={onBack} className="mr-2 p-2 rounded-md hover:bg-[#3a3a3a]">
+            <IoArrowBack />
+          </button>
+        )}
+        <div onClick={() => setOpenUserInfo(true)} className="flex gap-x-4 items-center">
         <img className="rounded-full bg-amber-50 w-10 h-10 object-cover" src={selectedChat.src || "/image.png"} alt="profilePic"/>
         <p>{selectedChat.Name || selectedChat.number}</p>
+        </div>
       </div>
       {selectedChat.Name !== "Wassup AI" && <div className="text-white bg-[#3f3f3f] cursor-pointer flex justify-center rounded-md items-center w-10 h-10">
         <PiPhoneLight/>
@@ -33,8 +41,15 @@ const UserInfo = () => {
 }
 
 const MainTray = () => {
-  
-  const {chatInput, active, isChatOpen, openUserInfo, isChatBotOpen, setIsChatBotOpen} = useAuth()
+  const {chatInput, active, isChatOpen, openUserInfo, isChatBotOpen, setIsChatBotOpen, setIsChatOpen} = useAuth()
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const update = () => setIsMobile(window.innerWidth < 768)
+    update()
+    window.addEventListener('resize', update)
+    return () => window.removeEventListener('resize', update)
+  }, [])
   return (
     <div className="bg-[#323434] w-full">
     {!isChatOpen ? (
@@ -45,7 +60,10 @@ const MainTray = () => {
       </div>
       ) : (
       <div className="h-full w-full flex flex-col">
-        <TrayUpperPanel/>
+        <TrayUpperPanel
+          showBack={isMobile}
+          onBack={() => setIsChatOpen(false)}
+        />
         {openUserInfo && <UserInfo/>}
         {isChatBotOpen ? <ChatBot/> : <ChatContent/>}
       </div>
