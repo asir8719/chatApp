@@ -1,7 +1,9 @@
 import { useAuth } from "../Store/Auth"
+import { useUser } from "@clerk/clerk-react"
 
 const Chat = ({search = ""}) => {
 
+  const { user, isLoaded } = useUser();
   const {chats, setIsChatOpen, selectedChat, setSelectedChat, isChatOpen, setIsChatBotOpen, active, setActive}  = useAuth()
   const filteredChats = chats.filter(chat =>
     chat.Name?.toLowerCase().includes(search.toLowerCase()) ||
@@ -16,6 +18,10 @@ const Chat = ({search = ""}) => {
           <h1>{chats.Name || chats.number}</h1>
         </div>
       ))}
+      <div>
+        <h1>{user.emailAddresses[0].emailAddress}</h1>
+        <h1>{user.id}</h1>
+      </div>
     </div>
   )
 }

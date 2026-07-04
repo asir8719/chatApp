@@ -9,6 +9,7 @@ import { VscListFilter } from "react-icons/vsc";
 import Starred from "./Starred"
 import Archive from "./Archive";
 import NewChatForm from "./NewChatForm";
+import Profile from "./Profile";
 
 const SidebarLayout = () => {
 
@@ -24,15 +25,17 @@ const SidebarLayout = () => {
                 return <Chat search={search}/>
 
             case "Calls":
-                return <Calls/>
+                return <Calls />
 
             case "Starred Messages":
-                return <Starred/>
+                return <Starred />
 
             case "Archived Chats":
-                return <Archive/>
+                return <Archive />
         
-        default:
+            case "Profile":
+                return <Profile />
+            default:
                 return <Chat search={search}/>
         }
     }

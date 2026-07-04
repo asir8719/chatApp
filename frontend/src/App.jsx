@@ -1,46 +1,24 @@
-import { useEffect, useState } from 'react';
+import ChatApp from './Components/ChatApp';
 import './App.css';
-import Sidebar from './Components/Sidebar';
-import SidebarLayout from './Components/SidebarLayout';
-import { useAuth } from './Store/Auth';
-import MainTray from './Components/MainTray';
-import NewChatForm from './Components/NewChatForm';
+import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/clerk-react';
 
 function App() {
-  const [message, setMessage] = useState("");
-  const {setShowNewChat, showNewChat, setOpenUserInfo, isChatOpen} = useAuth()
-
-  const [isMobile, setIsMobile] = useState(false)
-
-  useEffect(() => {
-    const update = () => setIsMobile(window.innerWidth < 768)
-    update()
-    window.addEventListener('resize', update)
-    return () => window.removeEventListener('resize', update)
-  }, [])
-
   return (
-    <div className='bg-[#1d1f1f] h-screen flex w-full'>
-      {isMobile ? (
-        // Mobile: show list OR chat, like WhatsApp
-        isChatOpen ? (
-          <MainTray/>
-        ) : (
-          <SidebarLayout/>
-        )
-      ) : (
-        // Desktop: show full layout
-        <>
-          <Sidebar/>
-          <SidebarLayout/>
-          <MainTray/>
-        </>
-      )}
-      {showNewChat && (
-        <NewChatForm onClose={() => setShowNewChat(false)}/>
-      )}
-    </div>
-  )
+    <>
+      <SignedOut>
+        <div className="min-h-screen bg-[#1d1f1f] flex flex-col items-center justify-center gap-4 p-4">
+          <h1 className="text-white text-xl font-medium">Welcome to Chat</h1>
+          <div className="flex gap-3">
+            <SignInButton mode="modal" />
+            <SignUpButton mode="modal" />
+          </div>
+        </div>
+      </SignedOut>
+      <SignedIn>
+        <ChatApp />
+      </SignedIn>
+    </>
+  );
 }
 
-export default App
+export default App;
